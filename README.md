@@ -14,30 +14,39 @@ This project is divided into three modules, one per team member. Each member is 
 
 | Role | Responsible For | Team Member |
 |------|------------------|--------------|
-| 🧑‍💼 **HR / Admin** | Adding, updating, and removing employee records; managing master employee data | Zuvin Zawad&lt;br&gt;ID: 252-35-052 |
-| 👔 **Manager** | Reviewing attendance, viewing team records, generating reports | Jannatul Ferdousi Soptorshi&lt;br&gt;ID: 252-35-101 |
-| 🧑‍💻 **Employee** | Viewing personal profile, checking attendance, viewing payroll/salary info | Afia Fahmida Atoshi&lt;br&gt;ID: 252-35-276 |
+| 🧑‍💼 **HR / Admin** | Adding, updating, and removing employee records; managing master employee data | Zuvin Zawad (ID: 252-35-052) |
+| 👔 **Manager** | View all employees,View attendance records ,View payroll information| Jannatul Ferdousi Soptorshi (ID: 252-35-101) |
+| 🧑‍💻 **Employee** | Viewing personal profile, checking attendance, viewing payroll/salary info | Afia Fahmida Atoshi (ID: 252-35-276) |
 
 ## ✨ Features
 
 ### HR / Admin
-- Add new employee records
-- Update existing employee details
-- Delete / deactivate employee records
-- Search for employees (by ID or name)
-- View all employees
-- Record and view attendance
-- Compute and generate payroll / salary information
+-Functionalities:
+-Add new employee records
+-Update existing employee details
+-Delete / deactivate employee records
+-Search for employees (by ID)
+-View all employees (grouped by role)
+-Record daily attendance
+-View attendance records (all or by employee)
+-Update attendance records
+-Calculate monthly salary based on attendance
+-Generate payroll (with bonus & deductions)
+-View payroll information (all or by employee)
+-HR portal menu
+
 
 ### Manager
-- View attendance logs for employees
-- View salary / payroll summaries
-- View all employee records
+-View all employees (grouped by role)
+-View attendance records (all or filtered)
+-View payroll information (all or filtered)
+-Manager portal menu
 
 ### Employee
-- View own profile and details
-- View own attendance history
-- View own salary / payslip information
+-View own profile / information
+-View own attendance history
+-View own payroll / payslip information
+-Employee portal menu
 
 ## 🛠️ Tech Stack
 
