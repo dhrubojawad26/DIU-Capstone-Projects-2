@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Daffodil International University (DIU)</h1>
-  <h3>Capstone Project: Employee Management System</h3>
+  <h3>Capstone Project: Daffodil Employee Management System</h3>
   <img src="https://img.shields.io/badge/Language-C-00599C?style=for-the-badge&logo=c" alt="Language">
   <img src="https://img.shields.io/badge/DIU-Capstone--Project-00A859?style=for-the-badge" alt="Institution">
   <img src="https://img.shields.io/badge/Academic-Evaluation-orange?style=for-the-badge" alt="License">
