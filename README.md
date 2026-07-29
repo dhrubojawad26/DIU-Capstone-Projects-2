@@ -14,45 +14,45 @@ This project is divided into three modules, one per team member. Each member is 
 
 | Role | Responsible For | Team Member |
 |------|------------------|--------------|
-| 🧑‍💼 **HR / Admin** | Adding, updating, and removing employee records; managing master employee data | Zuvin Zawad (ID: 252-35-052) |
-| 👔 **Manager** | View all employees,View attendance records ,View payroll information| Jannatul Ferdousi Soptorshi (ID: 252-35-101) |
-| 🧑‍💻 **Employee** | Viewing personal profile, checking attendance, viewing payroll/salary info | Afia Fahmida Atoshi (ID: 252-35-276) |
+| 🧑‍💼 **HR / Admin** | Adding, updating, and removing employee records; managing master employee data | Zuvin Zawad <br>(ID: 252-35-052) |
+| 👔 **Manager** | View all employees,View attendance records ,View payroll information| Jannatul Ferdousi Soptorshi <br>(ID: 252-35-101) |
+| 🧑‍💻 **Employee** | Viewing personal profile, checking attendance, viewing payroll/salary info | Afia Fahmida Atoshi <br>(ID: 252-35-276) |
 
 ## ✨ Features
 
 ### HR / Admin
--Functionalities:
--Add new employee records
--Update existing employee details
--Delete / deactivate employee records
--Search for employees (by ID)
--View all employees (grouped by role)
--Record daily attendance
--View attendance records (all or by employee)
--Update attendance records
--Calculate monthly salary based on attendance
--Generate payroll (with bonus & deductions)
--View payroll information (all or by employee)
--HR portal menu
+-Functionalities:<br>
+-Add new employee records<br>
+-Update existing employee details<br>
+-Delete / deactivate employee records<br>
+-Search for employees (by ID)<br>
+-View all employees (grouped by role)<br>
+-Record daily attendance<br>
+-View attendance records (all or by employee)<br>
+-Update attendance records<br>
+-Calculate monthly salary based on attendance<br>
+-Generate payroll (with bonus & deductions)<br>
+-View payroll information (all or by employee)<br>
+-HR portal menu<br>
 
 
 ### Manager
--View all employees (grouped by role)
--View attendance records (all or filtered)
--View payroll information (all or filtered)
--Manager portal menu
+-View all employees (grouped by role)<br>
+-View attendance records (all or filtered)<br>
+-View payroll information (all or filtered)<br>
+-Manager portal menu<br>
 
 ### Employee
--View own profile / information
--View own attendance history
--View own payroll / payslip information
--Employee portal menu
+-View own profile / information<br>
+-View own attendance history<br>
+-View own payroll / payslip information<br>
+-Employee portal menu<br>
 
 ## 🛠️ Tech Stack
 
-- **Language:** C (C99 / GNU C)
-- **Data Storage:** Plain text files (`.txt`)
-- **Build Tool:** GCC Compiler
+- **Language:** C (C99 / GNU C)<br>
+- **Data Storage:** Plain text files (`.txt`)<br>
+- **Build Tool:** GCC Compiler<br>
 
 ## 🚀 How to Run
 
