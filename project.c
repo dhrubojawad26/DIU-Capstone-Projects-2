@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <openssl/md5.h>
 
 #define MAX 100
 #define WORKING_DAYS 30
@@ -53,9 +54,6 @@ struct Employee
     char phone[MAX];
     float baseSalary;
 };
-
-void md5String(const char *str, uint8_t *outDigest);
-void digestToHex(const uint8_t digest[16], char hex[33]);
 
 void printRoleMenu()
 {
@@ -888,16 +886,20 @@ void loginPortal()
 int checkPortalPassword()
 {
     char input[100];
-    uint8_t digest[16];
+    unsigned char digest[MD5_DIGEST_LENGTH];
     char hex[33];
     const char *correctHash = "81dc9bdb52d04dc20036dbd8313ed055";
+    int i;
 
     printf("\n----- PORTAL LOCKED -----\n");
     printf("Enter master password to access the system: ");
     scanf("%99s", input);
 
-    md5String(input, digest);
-    digestToHex(digest, hex);
+    MD5((unsigned char *)input, strlen(input), digest);
+
+    for (i = 0; i < MD5_DIGEST_LENGTH; i++)
+        sprintf(hex + i * 2, "%02x", digest[i]);
+    hex[32] = '\0';
 
     if (strcmp(hex, correctHash) == 0)
         return 1;
@@ -941,101 +943,4 @@ int main()
     }
 
     return 0;
-}
-
-typedef struct {
-    uint64_t size;
-    uint32_t buffer[4];
-    uint8_t  input[64];
-    uint8_t  digest[16];
-} MD5Context;
-
-static const uint32_t MD5_K[64] = {
-    0xd76aa478,0xe8c7b756,0x242070db,0xc1bdceee,0xf57c0faf,0x4787c62a,
-    0xa8304613,0xfd469501,0x698098d8,0x8b44f7af,0xffff5bb1,0x895cd7be,
-    0x6b901122,0xfd987193,0xa679438e,0x49b40821,0xf61e2562,0xc040b340,
-    0x265e5a51,0xe9b6c7aa,0xd62f105d,0x02441453,0xd8a1e681,0xe7d3fbc8,
-    0x21e1cde6,0xc33707d6,0xf4d50d87,0x455a14ed,0xa9e3e905,0xfcefa3f8,
-    0x676f02d9,0x8d2a4c8a,0xfffa3942,0x8771f681,0x6d9d6122,0xfde5380c,
-    0xa4beea44,0x4bdecfa9,0xf6bb4b60,0xbebfbc70,0x289b7ec6,0xeaa127fa,
-    0xd4ef3085,0x04881d05,0xd9d4d039,0xe6db99e5,0x1fa27cf8,0xc4ac5665,
-    0xf4292244,0x432aff97,0xab9423a7,0xfc93a039,0x655b59c3,0x8f0ccc92,
-    0xffeff47d,0x85845dd1,0x6fa87e4f,0xfe2ce6e0,0xa3014314,0x4e0811a1,
-    0xf7537e82,0xbd3af235,0x2ad7d2bb,0xeb86d391
-};
-
-static const uint32_t MD5_R[64] = {
-    7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,
-    5, 9,14,20, 5, 9,14,20, 5, 9,14,20, 5, 9,14,20,
-    4,11,16,23, 4,11,16,23, 4,11,16,23, 4,11,16,23,
-    6,10,15,21, 6,10,15,21, 6,10,15,21, 6,10,15,21
-};
-
-#define LEFTROT(x,c) (((x)<<(c)) | ((x)>>(32-(c))))
-
-static void md5_chunk(uint32_t b[4], const uint8_t chunk[64]) {
-    uint32_t w[16], a=b[0], b2=b[1], c=b[2], d=b[3];
-    int i;
-    for(i=0;i<16;i++)
-        w[i]=chunk[i*4]|(chunk[i*4+1]<<8)|(chunk[i*4+2]<<16)|(chunk[i*4+3]<<24);
-
-    for(i=0;i<64;i++){
-        uint32_t f,g;
-        if(i<16){ f=(b2&c)|((~b2)&d); g=i; }
-        else if(i<32){ f=(d&b2)|((~d)&c); g=(5*i+1)%16; }
-        else if(i<48){ f=b2^c^d; g=(3*i+5)%16; }
-        else{ f=c^(b2|(~d)); g=(7*i)%16; }
-        uint32_t t=d; d=c; c=b2;
-        b2=b2+LEFTROT((a+f+MD5_K[i]+w[g]),MD5_R[i]);
-        a=t;
-    }
-    b[0]+=a; b[1]+=b2; b[2]+=c; b[3]+=d;
-}
-
-void md5Init(MD5Context *ctx) {
-    ctx->size=0;
-    ctx->buffer[0]=0x67452301;
-    ctx->buffer[1]=0xefcdab89;
-    ctx->buffer[2]=0x98badcfe;
-    ctx->buffer[3]=0x10325476;
-}
-
-void md5Update(MD5Context *ctx, const uint8_t *data, size_t len) {
-    size_t i;
-    for(i=0;i<len;i++){
-        ctx->input[(ctx->size%64)] = data[i];
-        ctx->size++;
-        if(ctx->size%64==0) md5_chunk(ctx->buffer, ctx->input);
-    }
-}
-
-void md5Finalize(MD5Context *ctx) {
-    uint64_t bits = ctx->size*8;
-    uint8_t pad[64];
-    size_t padLen = (ctx->size%64<56)?(56-ctx->size%64):(120-ctx->size%64);
-    memset(pad,0,sizeof(pad)); pad[0]=0x80;
-    md5Update(ctx,pad,padLen);
-    uint8_t lenBytes[8]={0};
-    int i; for(i=0;i<8;i++) lenBytes[i]=(bits>>(i*8))&0xFF;
-    md5Update(ctx,lenBytes,8);
-    for(i=0;i<4;i++){
-        ctx->digest[i*4]   = ctx->buffer[i]&0xFF;
-        ctx->digest[i*4+1] = (ctx->buffer[i]>>8)&0xFF;
-        ctx->digest[i*4+2] = (ctx->buffer[i]>>16)&0xFF;
-        ctx->digest[i*4+3] = (ctx->buffer[i]>>24)&0xFF;
-    }
-}
-
-void md5String(const char *str, uint8_t *outDigest) {
-    MD5Context ctx;
-    md5Init(&ctx);
-    md5Update(&ctx, (const uint8_t*)str, strlen(str));
-    md5Finalize(&ctx);
-    memcpy(outDigest, ctx.digest, 16);
-}
-
-void digestToHex(const uint8_t digest[16], char hex[33]) {
-    int i;
-    for(i=0;i<16;i++) sprintf(hex+i*2,"%02x",digest[i]);
-    hex[32]='\0';
 }
